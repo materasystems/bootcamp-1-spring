@@ -1,7 +1,6 @@
 package com.matera.bootcamp.digitalbank;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -13,44 +12,38 @@ import com.matera.bootcamp.digitalbank.repository.ClienteRepository;
 @Component
 public class AppStartupRunner implements ApplicationRunner {
 
-	Printer inglesPrinter;
-	Printer portuguesPrinter;
-
 	ClienteRepository clienteRepository;
 
-	public AppStartupRunner(Printer inglesPrinter, Printer portuguesPrinter, ClienteRepository clienteRepository) {
-		this.inglesPrinter = inglesPrinter;
-		this.portuguesPrinter = portuguesPrinter;
+	public AppStartupRunner(ClienteRepository clienteRepository) {
 		this.clienteRepository = clienteRepository;
 	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		inglesPrinter.print();
-		portuguesPrinter.print();
-
-		// Criamos o registro
-		Cliente cliente = new Cliente(null, "Jo„o", "10399505903", 9999l, new BigDecimal("1000"), "Logradouro", 10,
-				"Complemento", "Bairro", "Cidade", "PR", "Cep");
-		Cliente save = clienteRepository.save(cliente);
-		System.out.println("Logando o ID Criado: " + save.getId());
+		Cliente cliente = new Cliente("Jo√£o", "10399505903", 9999L, new BigDecimal("1000"), "Logradouro", 10,
+				"Complemento", "Bairro", "Cidade", "PR", "Cep", null);
 		
-		// Buscamos o Registro no banco de dados
-		Optional<Cliente> findById = clienteRepository.findById(save.getId());
-		Cliente clienteRetornado = null;
-		if (findById.isPresent()) {
-			System.out.println("Busquei o cliente no banco. Nome ");
-			clienteRetornado = findById.get();
-		} else {
-			System.out.println("N„o encontrei o cliente.");
-		}
+		clienteRepository.save(cliente);
 		
-		// Alteramos o objeto/registro retornado do banco de dados
-		clienteRetornado.setNome("Gabriel");
-		clienteRepository.save(clienteRetornado);
+		Cliente cliente2 = clienteRepository.findByCpf("10399505903").orElse(null);
 		
-		// Deletando a informaÁ„o do banco
-		clienteRepository.deleteById(clienteRetornado.getId());
+		System.out.println("Cliente 2: " + cliente2);
+		
+		Cliente cliente3 = clienteRepository.buscaPorCpf("10399505903").orElse(null);
+		
+		System.out.println("Cliente 3: " + cliente3);
+		
+		Cliente cliente4 = clienteRepository.buscaPorCpfNativeQuery("10399505903").orElse(null);
+		
+		System.out.println("Cliente 4: " + cliente4);
+		
+		Cliente cliente5 = clienteRepository.buscaPorCpfENome("10399505903", "Jo√£o").orElse(null);
+		
+		System.out.println("Cliente 5: " + cliente5);
+		
+		Cliente cliente6 = clienteRepository.findByCpfAndNome("10399505903", "Jo√£o").orElse(null);
+		
+		System.out.println("Cliente 6: " + cliente6);
 		
 	}
 
