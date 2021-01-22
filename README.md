@@ -30,3 +30,8 @@
       * Criação da estrutura do pacote **repository**
       * Usando a classe **AppStartupRunner** para alimentar a base de dados do H2 utilizando as classes do pacote **repository**
       * [Branch - aula 3](https://github.com/materasystems/bootcamp-1-spring/tree/aula3)
+  * **Aula 4**
+      * Finalizando mapeamento de entidades e repositórios
+      * Refatorando entidades com a criação da classe **EntidadeBase**
+      * Refatorando entidades com o uso de Lombok
+      * [Branch - aula 4](https://github.com/materasystems/bootcamp-1-spring/tree/aula4)
