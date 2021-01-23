@@ -6,44 +6,75 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import com.matera.bootcamp.digitalbank.dto.request.ClienteRequestDTO;
 import com.matera.bootcamp.digitalbank.entity.Cliente;
-import com.matera.bootcamp.digitalbank.repository.ClienteRepository;
+import com.matera.bootcamp.digitalbank.service.ClienteService;
 
 @Component
 public class AppStartupRunner implements ApplicationRunner {
 
-	ClienteRepository clienteRepository;
+	private ClienteService clienteService;
 
-	public AppStartupRunner(ClienteRepository clienteRepository) {
-		this.clienteRepository = clienteRepository;
+	public AppStartupRunner(ClienteService clienteService) {
+		this.clienteService = clienteService;
 	}
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-		Cliente cliente = new Cliente("João", "10399505903", 9999L, new BigDecimal("1000"), "Logradouro", 10,
-				"Complemento", "Bairro", "Cidade", "PR", "Cep", null);
 		
-		clienteRepository.save(cliente);
+		// Cadastrando via Service
+		ClienteRequestDTO cliente = ClienteRequestDTO.builder().nome("João")
+															   .cpf("10399505903")
+															   .telefone(9999L)
+															   .rendaMensal(new BigDecimal("1000"))
+															   .logradouro("Logradouro")
+															   .numero(10)
+															   .complemento("Complemento")
+															   .bairro("Bairro")
+															   .cidade("Maringa")
+															   .estado("PR")
+															   .cep("87046920")
+															   .build();
 		
-		Cliente cliente2 = clienteRepository.findByCpf("10399505903").orElse(null);
 		
-		System.out.println("Cliente 2: " + cliente2);
+		Cliente clienteSalvo = clienteService.cadastra(cliente).getCliente();
 		
-		Cliente cliente3 = clienteRepository.buscaPorCpf("10399505903").orElse(null);
+		// Consultado por ID via Service
+		System.out.println("Consulta por id: " + clienteService.consulta(clienteSalvo.getId()));
 		
-		System.out.println("Cliente 3: " + cliente3);
+		// Consultando todos os Clientes
+		ClienteRequestDTO cliente2 = ClienteRequestDTO.builder().nome("Gabriel")
+															   .cpf("10399505904")
+															   .telefone(9998L)
+															   .rendaMensal(new BigDecimal("1000"))
+															   .logradouro("Logradouro")
+															   .numero(10)
+															   .complemento("Complemento")
+															   .bairro("Bairro")
+															   .cidade("Maringa")
+															   .estado("PR")
+															   .cep("87046920")
+															   .build();
 		
-		Cliente cliente4 = clienteRepository.buscaPorCpfNativeQuery("10399505903").orElse(null);
+		Cliente cliente2Salvo = clienteService.cadastra(cliente2).getCliente();
 		
-		System.out.println("Cliente 4: " + cliente4);
+		System.out.println("Listar todos: " + clienteService.consultaTodos());
 		
-		Cliente cliente5 = clienteRepository.buscaPorCpfENome("10399505903", "João").orElse(null);
-		
-		System.out.println("Cliente 5: " + cliente5);
-		
-		Cliente cliente6 = clienteRepository.findByCpfAndNome("10399505903", "João").orElse(null);
-		
-		System.out.println("Cliente 6: " + cliente6);
+		// Atualiza Cliente
+		ClienteRequestDTO dadosAlteracao = ClienteRequestDTO.builder().nome("Gabriel")
+																	   .cpf("10399505904")
+																	   .telefone(9998L)
+																	   .rendaMensal(new BigDecimal("2000"))
+																	   .logradouro("Logradouro")
+																	   .numero(10)
+																	   .complemento("Complemento")
+																	   .bairro("Bairro")
+																	   .cidade("Maringa")
+																	   .estado("PR")
+																	   .cep("87046920")
+																	   .build();
+		clienteService.atualiza(cliente2Salvo.getId(), dadosAlteracao);
+		System.out.println("Cliente alterado: " + clienteService.consulta(cliente2Salvo.getId()));
 		
 	}
 
