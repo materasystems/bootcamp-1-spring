@@ -35,3 +35,8 @@
       * Refatorando entidades com a criação da classe **EntidadeBase**
       * Refatorando entidades com o uso de Lombok
       * [Branch - aula 4](https://github.com/materasystems/bootcamp-1-spring/tree/aula4)
+  * **Aula 5**
+      * Criação da estrutura do pacote **dto** com classes de *Request* e *Response*
+      * Criação da estrutura do pacote **service**
+      * Criando consultas necessárias nas classes *Repository* para as validações feitas nas classes *Service*
+      * [Branch - aula 5](https://github.com/materasystems/bootcamp-1-spring/tree/aula5)
