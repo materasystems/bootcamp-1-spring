@@ -40,3 +40,12 @@
       * Criação da estrutura do pacote **service**
       * Criando consultas necessárias nas classes *Repository* para as validações feitas nas classes *Service*
       * [Branch - aula 5](https://github.com/materasystems/bootcamp-1-spring/tree/aula5)
+  * **Aula 6**
+      * Correção de alguns problemas na classe **ClienteService**
+      * Uso da *annotation* **@Value** para buscar a configuração agencia.numeroMaximo no arquivo de propriedades da aplicação
+      * Alterações nos enums **Natureza**, **SituacaoConta** e **TipoLancamento** e seus mapeamentos para não gravar o ordinal ou a string dos enums
+      * Refatorando *exceptions* para uso da classe **ServiceException**
+      * Finalizando consultas necessárias nas classes *Repository* para as validações feitas nas classes *Service*
+      * Finalizando criação das classes de *Request* e *Response* no pacote **dto**
+      * Finalizando criação das regras de negócio nas classes do pacote **service**
+      * [Branch - aula 6](https://github.com/materasystems/bootcamp-1-spring/tree/aula6)
