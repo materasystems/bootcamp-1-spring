@@ -16,10 +16,11 @@ public interface LancamentoRepository extends JpaRepository<Lancamento, Long> {
 
 	Optional<Lancamento> findByIdAndConta_Id(Long idLancamento, Long idConta);
 	
-	@Query("SELECT lan " +
-	       "FROM   Lancamento lan " +
-		   "WHERE  TRUNC(lan.dataHora) BETWEEN :dataInicial AND NVL(:dataFinal, :dataInicial) " +
-	       "ORDER  BY lan.id DESC")
-	List<Lancamento> consultaLancamentosPorPeriodo(@Param("dataInicial") LocalDate dataInicial, @Param("dataFinal") LocalDate dataFinal);
+	@Query("SELECT l " +
+		   "FROM   Lancamento l " +
+		   "WHERE  l.conta.id = :idConta AND " +
+		   "       TRUNC(l.dataHora) BETWEEN :dataInicial AND NVL(:dataFinal, :dataInicial) " +
+		   "ORDER BY l.id DESC")
+		List<Lancamento> consultaLancamentosPorPeriodo(@Param("idConta") Long idConta, @Param("dataInicial") LocalDate dataInicial, @Param("dataFinal") LocalDate dataFinal);
 
 }

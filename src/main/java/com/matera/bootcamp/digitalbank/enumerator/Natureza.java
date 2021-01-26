@@ -11,5 +11,15 @@ public enum Natureza {
     DEBITO("D");
 
     private String codigo;
+    
+    public static Natureza buscaPorCodigo(String codigo) {
+        for (Natureza natureza : values()) {
+            if (natureza.getCodigo().equals(codigo)) {
+                return natureza;
+            }
+        }
+
+        return null;
+    }
 
 }
