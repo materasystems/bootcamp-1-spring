@@ -2,14 +2,16 @@ package com.matera.bootcamp.digitalbank.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.matera.bootcamp.digitalbank.dto.request.ClienteRequestDTO;
 import com.matera.bootcamp.digitalbank.dto.response.ClienteResponseDTO;
+import com.matera.bootcamp.digitalbank.dto.response.ContaResponseDTO;
 import com.matera.bootcamp.digitalbank.entity.Cliente;
-import com.matera.bootcamp.digitalbank.entity.Conta;
+import com.matera.bootcamp.digitalbank.exception.ServiceException;
 import com.matera.bootcamp.digitalbank.repository.ClienteRepository;
 
 @Service
@@ -24,8 +26,7 @@ public class ClienteService {
 	}
 
 	@Transactional
-	public Conta cadastra(ClienteRequestDTO clienteRequestDTO) {
-
+	public ContaResponseDTO cadastra(ClienteRequestDTO clienteRequestDTO) {
 		validaCadastro(clienteRequestDTO);
 
 		Cliente cliente = clienteRequestDTOParaEntidade(clienteRequestDTO, new Cliente());
@@ -36,16 +37,13 @@ public class ClienteService {
 	}
 
 	public ClienteResponseDTO consulta(Long id) {
-
-		Cliente cliente = buscaPorID(id);
+		Cliente cliente = buscaPorId(id);
 
 		return entidadeParaClienteResponseDTO(cliente);
 	}
 
 	public List<ClienteResponseDTO> consultaTodos() {
-		
 		List<Cliente> clientes = clienteRepository.findAll();
-		
 		List<ClienteResponseDTO> clientesResponseDTO = new ArrayList<>();
 		
 		clientes.forEach(cli -> clientesResponseDTO.add(entidadeParaClienteResponseDTO(cli)));
@@ -53,14 +51,33 @@ public class ClienteService {
 		return clientesResponseDTO;
 	}
 
+	@Transactional
 	public void atualiza(Long id, ClienteRequestDTO clienteRequestDTO) {
+		validaAtualizacao(id, clienteRequestDTO);
 
-		Cliente cliente = validaAtualizacao(id, clienteRequestDTO);
-
-		Cliente clienteAtualizado = clienteRequestDTOParaEntidade(clienteRequestDTO, cliente);
+		Cliente clienteAtualizado = clienteRequestDTOParaEntidade(clienteRequestDTO, buscaPorId(id));
+		
 		clienteRepository.save(clienteAtualizado);
 	}
 
+	private Cliente buscaPorId(Long id) {
+		return clienteRepository.findById(id).orElseThrow(() -> new ServiceException("Cliente de ID " + id + " não encontrado."));
+	}
+	
+	private void validaCadastro(ClienteRequestDTO clienteRequestDTO) {
+		if (clienteRepository.findByCpf(clienteRequestDTO.getCpf()).isPresent()) {
+			throw new ServiceException("Já existe um Cliente com esse CPF.");
+		}
+	}
+	
+	private void validaAtualizacao(Long id, ClienteRequestDTO clienteRequestDTO) {
+		Optional<Cliente> clienteExistente = clienteRepository.findByCpf(clienteRequestDTO.getCpf());
+
+		if (clienteExistente.isPresent() && !clienteExistente.get().getId().equals(id)) {
+			throw new ServiceException("Já existe um Cliente com esse CPF.");
+		}
+	}
+	
 	private Cliente clienteRequestDTOParaEntidade(ClienteRequestDTO clienteRequestDTO, Cliente cliente) {
 		cliente.setBairro(clienteRequestDTO.getBairro());
 		cliente.setCep(clienteRequestDTO.getCep());
@@ -73,46 +90,24 @@ public class ClienteService {
 		cliente.setNumero(clienteRequestDTO.getNumero());
 		cliente.setRendaMensal(clienteRequestDTO.getRendaMensal());
 		cliente.setTelefone(clienteRequestDTO.getTelefone());
+		
 		return cliente;
 	}
 
 	private ClienteResponseDTO entidadeParaClienteResponseDTO(Cliente cliente) {
-		ClienteResponseDTO clienteResponseDTO = new ClienteResponseDTO();
-		clienteResponseDTO.setId(cliente.getId());
-		clienteResponseDTO.setBairro(cliente.getBairro());
-		clienteResponseDTO.setCep(cliente.getCep());
-		clienteResponseDTO.setCidade(cliente.getCidade());
-		clienteResponseDTO.setComplemento(cliente.getComplemento());
-		clienteResponseDTO.setCpf(cliente.getCpf());
-		clienteResponseDTO.setEstado(cliente.getEstado());
-		clienteResponseDTO.setLogradouro(cliente.getLogradouro());
-		clienteResponseDTO.setNome(cliente.getNome());
-		clienteResponseDTO.setNumero(cliente.getNumero());
-		clienteResponseDTO.setRendaMensal(cliente.getRendaMensal());
-		clienteResponseDTO.setTelefone(cliente.getTelefone());
-		return clienteResponseDTO;
-	}
-
-	private Cliente buscaPorID(Long id) {
-		return clienteRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Cliente de ID " + id + " não encontrado."));
-	}
-	
-	private Cliente validaAtualizacao(Long id, ClienteRequestDTO clienteRequestDTO) {
-		Cliente clienteExistente = buscaPorID(id);
-
-		if (clienteRequestDTO.getCpf().equals(clienteExistente.getCpf())
-				&& !clienteExistente.getId().equals(id)) {
-			throw new RuntimeException("Já existe um Cliente com esse CPF.");
-		}
-
-		return clienteExistente;
-	}
-
-	private void validaCadastro(ClienteRequestDTO clienteRequestDTO) {
-		if (clienteRepository.findByCpf(clienteRequestDTO.getCpf()).isPresent()) {
-			throw new RuntimeException("Já existe um Cliente com esse CPF.");
-		}
+		return ClienteResponseDTO.builder().id(cliente.getId())
+										   .bairro(cliente.getBairro())
+										   .cep(cliente.getCep())
+										   .cidade(cliente.getCidade())
+										   .complemento(cliente.getComplemento())
+										   .cpf(cliente.getCpf())
+										   .estado(cliente.getEstado())
+										   .logradouro(cliente.getLogradouro())
+										   .nome(cliente.getNome())
+										   .numero(cliente.getNumero())
+										   .rendaMensal(cliente.getRendaMensal())
+										   .telefone(cliente.getTelefone())
+										   .build();
 	}
 
 }
