@@ -1,0 +1,621 @@
+{
+	"info": {
+		"_postman_id": "418fe9e6-20ab-49dd-b49c-08f4048fa748",
+		"name": "Digitalbank",
+		"description": "Matera - Curso de férias 2020",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Insere cliente 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\": \"Cliente 1\",\n\t\"cpf\": \"72979929921\",\n\t\"telefone\": 44999001234,\n\t\"rendaMensal\": 5000,\n\t\"logradouro\": \"Rua 1\",\n\t\"numero\": 100,\n\t\"complemento\": \"Casa 1\",\n\t\"bairro\": \"Bairro 1\",\n\t\"cidade\": \"Maringá\",\n\t\"estado\": \"PR\",\n\t\"cep\": \"87087087\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Insere cliente 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\": \"Cliente 2\",\n\t\"cpf\": \"50667427945\",\n\t\"telefone\": 44999001235,\n\t\"rendaMensal\": 6000,\n\t\"logradouro\": \"Rua 2\",\n\t\"numero\": 200,\n\t\"complemento\": \"Casa 2\",\n\t\"bairro\": \"Bairro 2\",\n\t\"cidade\": \"Maringá\",\n\t\"estado\": \"PR\",\n\t\"cep\": \"87087088\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta cliente por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta todos os clientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/clientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta conta por id cliente",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/clientes/1/conta",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"clientes",
+								"1",
+								"conta"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualiza cliente 1",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"nome\": \"Cliente 1\",\n\t\"cpf\": \"72979929921\",\n\t\"telefone\": 44999001234,\n\t\"rendaMensal\": 10000,\n\t\"logradouro\": \"Rua 101\",\n\t\"numero\": 101,\n\t\"complemento\": \"Casa 101\",\n\t\"bairro\": \"Bairro 101\",\n\t\"cidade\": \"Maringá\",\n\t\"estado\": \"PR\",\n\t\"cep\": \"87087000\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/clientes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"clientes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "646e111b-46ca-400e-b6dd-857002875a6f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "e9e200e0-ccdc-458e-9e38-b94aa126dc26",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Contas",
+			"item": [
+				{
+					"name": "Efetua depósito",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"valor\": 1000.00,\n\t\"descricao\": \"Depósito Caixa Eletrônico\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/depositar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"depositar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Efetua saque",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"valor\": 100.00,\n\t\"descricao\": \"Saque Caixa Eletrônico\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/sacar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"sacar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Efetua pagamento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"valor\": 50.00,\n\t\"descricao\": \"Pagamento de boleto\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/pagar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"pagar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Efetua transferência",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"numeroAgencia\": 1,\n\t\"numeroConta\": 44999001235,\n\t\"valor\": 30.00,\n\t\"descricao\": \"Churrasco\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/transferir",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"transferir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estorna lançamento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/lancamentos/3/estornar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"lancamentos",
+								"3",
+								"estornar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bloqueia conta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/bloquear",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"bloquear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desbloqueia conta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/desbloquear",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"desbloquear"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta lançamento por id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/lancamentos/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"lancamentos",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove lançamento de estorno por id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/lancamentos/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"lancamentos",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta lançamentos por conta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/lancamentos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"lancamentos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta lançamentos por período",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas/1/lancamentos?dataInicial=20-12-2019&dataFinal=26-12-2019",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas",
+								"1",
+								"lancamentos"
+							],
+							"query": [
+								{
+									"key": "dataInicial",
+									"value": "20-12-2019"
+								},
+								{
+									"key": "dataFinal",
+									"value": "26-12-2019"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consulta todas as contas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/digitalbank/api/v1/contas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"digitalbank",
+								"api",
+								"v1",
+								"contas"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "dfd22152-c1c4-4bb2-8ab6-6aa198c8fa13",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2a77b98d-5176-4319-9e5d-6f05b395843f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

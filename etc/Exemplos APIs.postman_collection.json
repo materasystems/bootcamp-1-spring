@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "38274d0d-1cce-4daa-b2b9-50d1623f3c73",
+		"name": "Exemplos APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Correios",
+			"item": [
+				{
+					"name": "https://viacep.com.br/ws/87033080/json/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://viacep.com.br/ws/87033080/json/",
+							"protocol": "https",
+							"host": [
+								"viacep",
+								"com",
+								"br"
+							],
+							"path": [
+								"ws",
+								"87033080",
+								"json",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://viacep.com.br/ws/PR/Maringa/Nardina/json/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://viacep.com.br/ws/PR/Maringa/Rasgulaeff/json/",
+							"protocol": "https",
+							"host": [
+								"viacep",
+								"com",
+								"br"
+							],
+							"path": [
+								"ws",
+								"PR",
+								"Maringa",
+								"Rasgulaeff",
+								"json",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Petstore",
+			"item": [
+				{
+					"name": "https://petstore3.swagger.io/api/v3/pet/findByStatus?status={status}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore3.swagger.io/api/v3/pet/findByStatus?status=available",
+							"protocol": "https",
+							"host": [
+								"petstore3",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"api",
+								"v3",
+								"pet",
+								"findByStatus"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "available"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://petstore3.swagger.io/api/v3/pet",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 10203040,\r\n\t\"name\": \"Doguinho da Matera\",\r\n\t\"status\": \"available\"\r\n}"
+						},
+						"url": {
+							"raw": "https://petstore3.swagger.io/api/v3/pet",
+							"protocol": "https",
+							"host": [
+								"petstore3",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"api",
+								"v3",
+								"pet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://petstore3.swagger.io/api/v3/pet",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"id\": 10203040,\r\n\t\"name\": \"Novo Doguinho da Matera\",\r\n\t\"status\": \"available\"\r\n}"
+						},
+						"url": {
+							"raw": "https://petstore3.swagger.io/api/v3/pet",
+							"protocol": "https",
+							"host": [
+								"petstore3",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"api",
+								"v3",
+								"pet"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://petstore3.swagger.io/api/v3/pet/{id}",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore3.swagger.io/api/v3/pet/10203040",
+							"protocol": "https",
+							"host": [
+								"petstore3",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"api",
+								"v3",
+								"pet",
+								"10203040"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://petstore3.swagger.io/api/v3/pet/{id}",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://petstore3.swagger.io/api/v3/pet/10203040",
+							"protocol": "https",
+							"host": [
+								"petstore3",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"api",
+								"v3",
+								"pet",
+								"10203040"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://petstore.swagger.io/v2/store/inventory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://petstore.swagger.io/v2/store/inventory",
+							"protocol": "https",
+							"host": [
+								"petstore",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"v2",
+								"store",
+								"inventory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://petstore3.swagger.io/api/v3/store/order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 20304050,\r\n\t\"petId\": 10203040,\r\n\t\"quantity\": 1,\r\n\t\"shipDate\": \"2021-02-01T20:00:00.000Z\",\r\n\t\"status\": \"placed\",\r\n\t\"complete\": true\r\n}"
+						},
+						"url": {
+							"raw": "https://petstore3.swagger.io/api/v3/store/order",
+							"protocol": "https",
+							"host": [
+								"petstore3",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"api",
+								"v3",
+								"store",
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://petstore3.swagger.io/api/v3/store/order",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://petstore3.swagger.io/api/v3/store/order/20304050",
+							"protocol": "https",
+							"host": [
+								"petstore3",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"api",
+								"v3",
+								"store",
+								"order",
+								"20304050"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "https://petstore3.swagger.io/api/v3/store/order",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "https://petstore3.swagger.io/api/v3/store/order/20304050",
+							"protocol": "https",
+							"host": [
+								"petstore3",
+								"swagger",
+								"io"
+							],
+							"path": [
+								"api",
+								"v3",
+								"store",
+								"order",
+								"20304050"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
