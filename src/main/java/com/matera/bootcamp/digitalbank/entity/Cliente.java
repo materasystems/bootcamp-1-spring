@@ -13,10 +13,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-// Anotações importantes:
-//@EqualsAndHashCode
-//@RequiredArgsConstructor
-//@Data
 @Getter
 @Setter
 @AllArgsConstructor

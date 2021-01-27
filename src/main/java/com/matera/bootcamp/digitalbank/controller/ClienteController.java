@@ -2,6 +2,8 @@ package com.matera.bootcamp.digitalbank.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +31,7 @@ public class ClienteController extends ControllerBase {
 	}
 
 	@PostMapping
-	public ResponseEntity<ResponseDTO<ContaResponseDTO>> cadastra(@RequestBody ClienteRequestDTO clienteRequestDTO) {
+	public ResponseEntity<ResponseDTO<ContaResponseDTO>> cadastra(@Valid @RequestBody ClienteRequestDTO clienteRequestDTO) {
 		ContaResponseDTO contaResponseDTO = clienteService.cadastra(clienteRequestDTO);
 
 		return ResponseEntity.status(HttpStatus.CREATED)
@@ -61,7 +63,7 @@ public class ClienteController extends ControllerBase {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<ResponseDTO<Void>> atualiza(@PathVariable Long id, @RequestBody ClienteRequestDTO clienteRequestDTO) {
+	public ResponseEntity<ResponseDTO<Void>> atualiza(@PathVariable Long id, @Valid @RequestBody ClienteRequestDTO clienteRequestDTO) {
 
 		clienteService.atualiza(id, clienteRequestDTO);
 

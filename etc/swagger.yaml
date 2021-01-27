@@ -1,0 +1,691 @@
+swagger: "2.0"
+info:
+  description: "Matera - 5ª edição Curso de Férias (2020) - Construindo APIs REST com Spring"
+  version: "1.0.0"
+  title: "Digitalbank"
+host: "localhost:8080"
+basePath: "/digitalbank/api/v1"
+tags:
+  - name: "clientes"
+    description: "Cadastro de clientes"
+  - name: "contas"
+    description: "Cadastro de contas correntes e lançamentos"
+schemes:
+  - "http"
+paths:
+  /clientes:
+    post:
+      tags:
+        - "clientes"
+      summary: "Insere um novo cliente"
+      description: "Efetua a inclusão de um novo cliente com uma nova conta corrente, cujo número será o mesmo do telefone do cliente. Caso alguma validação de negócio falhe, um erro será retornado."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "ClienteRequestDTO"
+          required: true
+          schema:
+            $ref: "#/definitions/ClienteRequestDTO"
+      responses:
+        201:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ContaResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+    get:
+      tags:
+        - "clientes"
+      summary: "Consulta todos os clientes"
+      description: "Retorna os dados de todos os clientes cadastrados."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                type: "array"
+                items:
+                  $ref: "#/definitions/ClienteResponseDTO"
+  /clientes/{id}:
+    get:
+      tags:
+        - "clientes"
+      summary: "Consulta cliente por id"
+      description: "Retorna os dados do cliente com o id informado. Caso alguma validação de negócio falhe, um erro será retornado."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id do cliente a ser consultado"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ClienteResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+    put:
+      tags:
+        - "clientes"
+      summary: "Atualiza um cliente existente"
+      description: "Atualiza os dados do cliente com o id informado. Todos os dados informados na requisição irão sobrescrever os dados do cadastro do cliente. Caso alguma validação de negócio falhe, um erro será retornado."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id do cliente a ser atualizado"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "body"
+          name: "ClienteRequestDTO"
+          required: true
+          schema:
+            $ref: "#/definitions/ClienteRequestDTO"
+      responses:
+        204:
+          description: "Requisição efetuada com sucesso"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /clientes/{id}/conta:
+    get:
+      tags:
+        - "clientes"
+      summary: "Consulta a conta de um cliente por id"
+      description: "Retorna os dados da conta do cliente com o id informado. Caso alguma validação de negócio falhe, um erro será retornado."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id do cliente"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ContaResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /contas:
+    get:
+      tags:
+        - "contas"
+      summary: "Consulta todas as contas"
+      description: "Retorna os dados de todas as contas correntes cadastradas."
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                type: "array"
+                items:
+                  $ref: "#/definitions/ContaResponseDTO"
+  /contas/{id}/bloquear:
+    post:
+      tags:
+        - "contas"
+      summary: "Realiza um bloqueio para uma conta"
+      description: "Muda a situação da conta para \"Bloqueada\", impedindo que a mesma seja movimentada. Caso alguma validação de negócio falhe, um erro será retornado."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id da conta corrente"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        204:
+          description: "Requisição efetuada com sucesso"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /contas/{id}/desbloquear:
+    post:
+      tags:
+        - "contas"
+      summary: "Realiza um desbloqueio para uma conta"
+      description: "Muda a situação da conta para \"Aberta\", permitindo que a mesma seja movimentada. Caso alguma validação de negócio falhe, um erro será retornado."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id da conta corrente"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        204:
+          description: "Requisição efetuada com sucesso"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /contas/{id}/depositar:
+    post:
+      tags:
+        - "contas"
+      summary: "Realiza um depósito para uma conta"
+      description: "Efetua a inclusão de um lançamento do tipo \"Depósito\" para a conta corrente com o id informado. Caso alguma validação de negócio falhe, um erro será retornado."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id da conta corrente"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "body"
+          name: "LancamentoRequestDTO"
+          required: true
+          schema:
+            $ref: "#/definitions/LancamentoRequestDTO"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ComprovanteResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /contas/{id}/sacar:
+    post:
+      tags:
+        - "contas"
+      summary: "Realiza um saque para uma conta"
+      description: "Efetua a inclusão de um lançamento do tipo \"Saque\" para a conta corrente com o id informado. Caso alguma validação de negócio falhe, um erro será retornado."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id da conta corrente"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "body"
+          name: "LancamentoRequestDTO"
+          required: true
+          schema:
+            $ref: "#/definitions/LancamentoRequestDTO"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ComprovanteResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /contas/{id}/pagar:
+    post:
+      tags:
+        - "contas"
+      summary: "Realiza um pagamento para uma conta"
+      description: "Efetua a inclusão de um lançamento do tipo \"Pagamento\" para a conta corrente com o id informado. Caso alguma validação de negócio falhe, um erro será retornado."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id da conta corrente"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "body"
+          name: "LancamentoRequestDTO"
+          required: true
+          schema:
+            $ref: "#/definitions/LancamentoRequestDTO"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ComprovanteResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /contas/{id}/transferir:
+    post:
+      tags:
+        - "contas"
+      summary: "Realiza uma transferência de uma conta para outra"
+      description: "Efetua uma transferência, tendo como origem a conta corrente com o id informado e como destino a agência e conta corrente informadas no corpo da requisição. Caso alguma validação de negócio falhe, um erro será retornado."
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id da conta corrente de origem"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "body"
+          name: "TransferenciaRequestDTO"
+          required: true
+          schema:
+            $ref: "#/definitions/TransferenciaRequestDTO"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ComprovanteResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /contas/{id}/lancamentos:
+    get:
+      tags:
+        - "contas"
+      summary: "Consulta os lançamentos de uma conta"
+      description: "Retorna os lançamentos da conta corrente com o id informado. Os filtros de data não são obrigatórios, mas se utilizados, devem ser informados em conjunto. Caso alguma validação de negócio falhe, um erro será retornado."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id da conta corrente"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "query"
+          name: "dataInicial"
+          description: "Data inicial (dd-MM-yyyy)"
+          required: false
+          type: "string"
+          format: "date"
+        - in: "query"
+          name: "dataFinal"
+          description: "Data final (dd-MM-yyyy)"
+          required: false
+          type: "string"
+          format: "date"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ExtratoResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /contas/{idConta}/lancamentos/{idLancamento}:
+    get:
+      tags:
+        - "contas"
+      summary: "Consulta o comprovante de determinado lançamento"
+      description: "Retorna o comprovante do lançamento de uma conta de acordo com os ids informados. Caso alguma validação de negócio falhe, um erro será retornado."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "idConta"
+          description: "Id da conta corrente"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "path"
+          name: "idLancamento"
+          description: "Id do lançamento"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ComprovanteResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+    delete:
+      tags:
+        - "contas"
+      summary: "Remove um lançamento de estorno"
+      description: "Remove um lançamento de estorno de uma conta de acordo com os ids informados. Somente o lançamento de estorno informado será removido, ou seja, se o estorno se referir a uma transferência, o lançamento de estorno da transferência da outra conta envolvida não será removido. Caso alguma validação de negócio falhe, um erro será retornado."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "idConta"
+          description: "Id da conta corrente"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "path"
+          name: "idLancamento"
+          description: "Id do lançamento de estorno"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        204:
+          description: "Requisição efetuada com sucesso"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+  /contas/{idConta}/lancamentos/{idLancamento}/estornar:
+    post:
+      tags:
+        - "contas"
+      summary: "Realiza o estorno de determinado lançamento"
+      description: "Realiza o estorno do lançamento de uma conta com os ids informados. Para realizar o estorno, será criado um novo lançamento desfazendo o lançamento original. Caso alguma validação de negócio falhe, um erro será retornado."
+      produces:
+        - "application/json"
+      parameters:
+        - in: "path"
+          name: "idConta"
+          description: "Id da conta corrente"
+          required: true
+          type: "integer"
+          format: "int64"
+        - in: "path"
+          name: "idLancamento"
+          description: "Id do lançamento"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "Requisição efetuada com sucesso"
+          schema:
+            properties:
+              dados:
+                $ref: "#/definitions/ComprovanteResponseDTO"
+        400:
+          description: "Requisição inválida"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ErroResponseDTO"
+definitions:
+  ClienteRequestDTO:
+    type: "object"
+    properties:
+      nome:
+        type: "string"
+      cpf:
+        type: "string"
+      telefone:
+        type: "integer"
+        format: "int64"
+      rendaMensal:
+        type: "number"
+        format: "double"
+      logradouro:
+        type: "string"
+      numero:
+        type: "integer"
+        format: "int32"
+      complemento:
+        type: "string"
+      bairro:
+        type: "string"
+      cidade:
+        type: "string"
+      estado:
+        type: "string"
+      cep:
+        type: "string"
+    required:
+      - nome
+      - cpf
+      - telefone
+      - rendaMensal
+      - logradouro
+      - numero
+      - bairro
+      - cidade
+      - estado
+      - cep
+  LancamentoRequestDTO:
+    type: "object"
+    properties:
+      valor:
+        type: "number"
+        format: "double"
+      descricao:
+        type: "string"
+    required:
+      - valor
+  TransferenciaRequestDTO:
+    type: "object"
+    properties:
+      numeroAgencia:
+        type: "integer"
+        format: "int32"
+      numeroConta:
+        type: "integer"
+        format: "int64"
+      valor:
+        type: "number"
+        format: "double"
+      descricao:
+        type: "string"
+    required:
+      - numeroAgencia
+      - numeroConta
+      - valor
+  ClienteResponseDTO:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      nome:
+        type: "string"
+      cpf:
+        type: "string"
+      telefone:
+        type: "integer"
+        format: "int64"
+      rendaMensal:
+        type: "number"
+        format: "double"
+      logradouro:
+        type: "string"
+      numero:
+        type: "integer"
+        format: "int32"
+      complemento:
+        type: "string"
+      bairro:
+        type: "string"
+      cidade:
+        type: "string"
+      estado:
+        type: "string"
+      cep:
+        type: "string"
+    required:
+      - id
+      - nome
+      - cpf
+      - telefone
+      - rendaMensal
+      - logradouro
+      - numero
+      - bairro
+      - cidade
+      - estado
+      - cep
+  ComprovanteResponseDTO:
+    type: "object"
+    properties:
+      idLancamento:
+        type: "integer"
+        format: "int64"
+      codigoAutenticacao:
+        type: "string"
+      dataHora:
+        type: "string"
+        format: "date_time"
+        description: "(dd-MM-yyyy HH:mm:ss)"
+      valor:
+        type: "number"
+        format: "double"
+      natureza:
+        type: "string"
+      tipoLancamento:
+        type: "string"
+      numeroAgencia:
+        type: "integer"
+        format: "int32"
+      numeroConta:
+        type: "integer"
+        format: "int64"
+      descricao:
+        type: "string"
+    required:
+      - idLancamento
+      - codigoAutenticacao
+      - dataHora
+      - valor
+      - natureza
+      - tipoLancamento
+      - numeroAgencia
+      - numeroConta
+  ContaResponseDTO:
+    type: "object"
+    properties:
+      idCliente:
+        type: "integer"
+        format: "int64"
+      idConta:
+        type: "integer"
+        format: "int64"
+      numeroAgencia:
+        type: "integer"
+        format: "int32"
+      numeroConta:
+        type: "integer"
+        format: "int64"
+      situacao:
+        type: "string"
+      saldo:
+        type: "number"
+        format: "double"
+    required:
+      - idCliente
+      - idConta
+      - numeroAgencia
+      - numeroConta
+      - situacao
+      - saldo
+  ErroResponseDTO:
+    type: "object"
+    properties:
+      erros:
+        type: "array"
+        items:
+          title: "Erro"
+          type: "object"
+          properties:
+            campo:
+              type: "string"
+            mensagem:
+              type: "string"
+          required:
+            - mensagem
+  ExtratoResponseDTO:
+    type: "object"
+    properties:
+      conta:
+        $ref: '#/definitions/ContaResponseDTO'
+      lancamentos:
+        type: "array"
+        items:
+          $ref: '#/definitions/ComprovanteResponseDTO'
+    required:
+      - conta
+externalDocs:
+  description: "Saiba mais sobre o Curso de Férias"
+  url: "https://github.com/materasystems/curso-de-ferias-2020-spring"

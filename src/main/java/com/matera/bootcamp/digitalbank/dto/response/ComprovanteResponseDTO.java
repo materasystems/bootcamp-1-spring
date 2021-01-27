@@ -19,12 +19,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
-@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 public class ComprovanteResponseDTO {
 
 	private Long idLancamento;
 	private String codigoAutenticacao;
+	
+	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
 	private LocalDateTime dataHora;
+	
 	private BigDecimal valor;
 	private String natureza;
 	private String tipoLancamento;
