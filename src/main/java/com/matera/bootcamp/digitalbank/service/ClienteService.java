@@ -50,6 +50,10 @@ public class ClienteService {
 		
 		return clientesResponseDTO;
 	}
+	
+	public ContaResponseDTO consultaContaPorIdCliente(Long idCliente) {
+		return contaService.consultaContaPorIdCliente(idCliente);
+	}
 
 	@Transactional
 	public void atualiza(Long id, ClienteRequestDTO clienteRequestDTO) {
