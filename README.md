@@ -49,3 +49,12 @@
       * Finalizando criação das classes de *Request* e *Response* no pacote **dto**
       * Finalizando criação das regras de negócio nas classes do pacote **service**
       * [Branch - aula 6](https://github.com/materasystems/bootcamp-1-spring/tree/aula6)
+  * **Aula 7**
+      * Finalizando métodos da classe **ContaService**
+      * Criação da estrutura do pacote **controller** com requisições *GET*, *POST* e *PUT* para a entidade de Cliente
+      * Tratamento de códigos de retorno HTTP
+      * Requisições via Postman
+      * Anotações do Jackson para formatação do JSON
+      * *Exception handler* para tratamento de exceções
+      * Criação de requisições *POST* para a entidade de Conta
+      * [Branch - aula 7](https://github.com/materasystems/bootcamp-1-spring/tree/aula7)
