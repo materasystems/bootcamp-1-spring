@@ -58,3 +58,10 @@
       * *Exception handler* para tratamento de exceções
       * Criação de requisições *POST* para a entidade de Conta
       * [Branch - aula 7](https://github.com/materasystems/bootcamp-1-spring/tree/aula7)
+  * **Aula 8**
+      * Finalizando requisições *POST*, *GET* e *DELETE* para a entidade de Conta
+      * Usando a classe **AppStartupRunner** para alimentar a base de dados do H2 utilizando as classes do pacote **service**
+      * Importando *collection* pronta com os *requests* das APIs no Postman
+      * Validações nos *requests* usando anotações e tratando exceções de DTOs anotados com **@Valid** usando *Exception handler*
+      * Efetuando *debug* de uma requisição REST pelo Eclipse
+      * [Branch - aula 8](https://github.com/materasystems/bootcamp-1-spring/tree/aula8)
