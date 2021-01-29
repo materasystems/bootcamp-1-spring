@@ -1,0 +1,34 @@
+<configuration scan="true" scanPeriod="15 seconds">
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%d{dd/MM/yyyy HH:mm:ss.SSS X}] [%-33.-33thread] [%-5level] [%-70logger{70}] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <property name="LOG_FOLDER" value="C:\\temp"/>
+    <property name="LOG_FILE_NAME" value="digitalbank.log" />
+    
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FOLDER}\\${LOG_FILE_NAME}</file>
+        <append>true</append>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FOLDER}\\${LOG_FILE_NAME}.%d{yyyy-MM-dd_HH}hs.zip</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{dd/MM/yyyy HH:mm:ss.SSS X}] [%-33.-33thread] [%-5level] [%-70logger{70}] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Faz o Hibernate exibir os comandos SQL no log da aplicação -->
+    <logger name="org.hibernate.type" level="WARN" /> <!-- Mudar level para ALL -->
+    <logger name="org.hibernate" level="WARN" /> <!-- Mudar level para DEBUG -->
+
+    <!-- Muda o nível de log para DEBUG apenas para as classes da aplicação -->
+    <logger name="com.matera.bootcamp.digitalbank" level="DEBUG" />
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>

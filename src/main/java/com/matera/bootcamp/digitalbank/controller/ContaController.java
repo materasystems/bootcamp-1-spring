@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.context.MessageSource;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +32,8 @@ public class ContaController extends ControllerBase {
 
     private final ContaService contaService;
 
-    public ContaController(ContaService contaService) {
+    public ContaController(ContaService contaService, MessageSource messageSource) {
+    	super(messageSource);
         this.contaService = contaService;
     }
 

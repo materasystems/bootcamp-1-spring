@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,18 +21,24 @@ import com.matera.bootcamp.digitalbank.dto.response.ContaResponseDTO;
 import com.matera.bootcamp.digitalbank.dto.response.ResponseDTO;
 import com.matera.bootcamp.digitalbank.service.ClienteService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/api/v1/clientes")
+@Slf4j
 public class ClienteController extends ControllerBase {
 
 	private ClienteService clienteService;
 
-	public ClienteController(ClienteService clienteService) {
+	public ClienteController(ClienteService clienteService, MessageSource messageSource) {
+		super(messageSource);
 		this.clienteService = clienteService;
 	}
 
 	@PostMapping
 	public ResponseEntity<ResponseDTO<ContaResponseDTO>> cadastra(@Valid @RequestBody ClienteRequestDTO clienteRequestDTO) {
+		log.debug("Iniciando POST em /api/v1/clientes com request {}", clienteRequestDTO);
+		
 		ContaResponseDTO contaResponseDTO = clienteService.cadastra(clienteRequestDTO);
 
 		return ResponseEntity.status(HttpStatus.CREATED)

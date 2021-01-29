@@ -106,7 +106,7 @@ public class LancamentoService {
 	public void removeLancamentoEstorno(Long idConta, Long idLancamento) {
 	    Lancamento lancamentoEstorno = buscaLancamentoConta(idConta, idLancamento);
 	    Estorno estorno = estornoRepository.findByLancamentoEstorno_Id(idLancamento)
-	                                       .orElseThrow(() -> new ServiceException("Somente lançamentos de estorno podem ser removidos."));
+	                                       .orElseThrow(() -> new ServiceException("DB-16"));
 	    Lancamento lancamentoOriginal = estorno.getLancamentoOriginal();
 
 	    lancamentoOriginal.getConta().setSaldo(DigitalBankUtils.calculaSaldo(Natureza.buscaPorCodigo(lancamentoOriginal.getNatureza()),
@@ -132,42 +132,42 @@ public class LancamentoService {
 	
 	private Lancamento buscaLancamentoConta(Long idConta, Long idLancamento) {
 		return lancamentoRepository.findByIdAndConta_Id(idLancamento, idConta)
-													.orElseThrow(() -> new ServiceException("O lançamento de ID " + idLancamento + " não existe para a conta de ID " + idConta + "."));
+													.orElseThrow(() -> new ServiceException("DB-7", idLancamento, idConta));
 	}
 
 	private void validaLancamento(Lancamento lancamento) {
 	    if (SituacaoConta.BLOQUEADA.getCodigo().equals(lancamento.getConta().getSituacao())) {
-            throw new ServiceException("Conta de ID " + lancamento.getConta().getId() + " está na situação Bloqueada. Novos lançamentos não são permitidos.");
+            throw new ServiceException("DB-15", lancamento.getConta().getId());
         }
 
 	    if (Natureza.DEBITO.getCodigo().equals(lancamento.getNatureza()) && lancamento.getConta().getSaldo().compareTo(lancamento.getValor()) < 0) {
-            throw new ServiceException("Saldo indisponível para efetuar o lançamento.");
+            throw new ServiceException("DB-6");
         }
     }
 
 	private void validaEstorno(Lancamento lancamento, Transferencia transferencia, Long idConta, Long idLancamento) {
 		if (lancamento == null) {
-			throw new ServiceException("O lançamento de ID " + idLancamento + " não existe para a conta de ID " + idConta + ".");
+			throw new ServiceException("DB-7", idLancamento, idConta);
 		}
 
 		if (TipoLancamento.ESTORNO.getCodigo().equals(lancamento.getTipoLancamento())) {
-			throw new ServiceException("Tipo de lançamento " + lancamento.getTipoLancamento() + " não permite estornos.");
+			throw new ServiceException("DB-8", lancamento.getTipoLancamento());
 		}
 
 		if (estornoRepository.findByLancamentoOriginal_Id(lancamento.getId()).isPresent()) {
-			throw new ServiceException("O lançamento informado já está estornado.");
+			throw new ServiceException("DB-9");
 		}
 
 		if (TipoLancamento.TRANSFERENCIA.getCodigo().equals(lancamento.getTipoLancamento()) && !lancamento.getId().equals(transferencia.getLancamentoCredito().getId())) {
-			throw new ServiceException("Estorno de transferência só pode ser solicitado pela conta creditada.");
+			throw new ServiceException("DB-10");
 		}
 
 		if (SituacaoConta.BLOQUEADA.getCodigo().equals(lancamento.getConta().getSituacao())) {
-            throw new ServiceException("Conta de ID " + lancamento.getConta().getId() + " está na situação Bloqueada. Novos lançamentos não são permitidos.");
+            throw new ServiceException("DB-15", lancamento.getConta().getId());
         }
 
 		if (Natureza.CREDITO.getCodigo().equals(lancamento.getNatureza()) && lancamento.getConta().getSaldo().compareTo(lancamento.getValor()) < 0) {
-            throw new ServiceException("Saldo indisponível para estornar o lançamento de crédito.");
+            throw new ServiceException("DB-11");
         }
 	}
 

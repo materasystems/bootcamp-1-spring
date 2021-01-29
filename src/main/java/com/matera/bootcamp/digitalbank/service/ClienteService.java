@@ -65,12 +65,12 @@ public class ClienteService {
 	}
 
 	private Cliente buscaPorId(Long id) {
-		return clienteRepository.findById(id).orElseThrow(() -> new ServiceException("Cliente de ID " + id + " não encontrado."));
+		return clienteRepository.findById(id).orElseThrow(() -> new ServiceException("DB-1", id));
 	}
 	
 	private void validaCadastro(ClienteRequestDTO clienteRequestDTO) {
 		if (clienteRepository.findByCpf(clienteRequestDTO.getCpf()).isPresent()) {
-			throw new ServiceException("Já existe um Cliente com esse CPF.");
+			throw new ServiceException("DB-2", clienteRequestDTO.getCpf());
 		}
 	}
 	
@@ -78,7 +78,7 @@ public class ClienteService {
 		Optional<Cliente> clienteExistente = clienteRepository.findByCpf(clienteRequestDTO.getCpf());
 
 		if (clienteExistente.isPresent() && !clienteExistente.get().getId().equals(id)) {
-			throw new ServiceException("Já existe um Cliente com esse CPF.");
+			throw new ServiceException("DB-2", clienteRequestDTO.getCpf());
 		}
 	}
 	

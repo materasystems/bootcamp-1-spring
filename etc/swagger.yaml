@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  description: "Matera - 5ª edição Curso de Férias (2020) - Construindo APIs REST com Spring"
+  description: "Matera - 1ª edição Bootcamp (2021) - Construindo APIs REST com Spring"
   version: "1.0.0"
   title: "Digitalbank"
 host: "localhost:8080"
@@ -687,5 +687,5 @@ definitions:
     required:
       - conta
 externalDocs:
-  description: "Saiba mais sobre o Curso de Férias"
-  url: "https://github.com/materasystems/curso-de-ferias-2020-spring"
+  description: "Saiba mais sobre o Bootcamp"
+  url: "https://github.com/materasystems/bootcamp-1-spring"
