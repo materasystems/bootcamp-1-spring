@@ -65,3 +65,11 @@
       * Validações nos *requests* usando anotações e tratando exceções de DTOs anotados com **@Valid** usando *Exception handler*
       * Efetuando *debug* de uma requisição REST pelo Eclipse
       * [Branch - aula 8](https://github.com/materasystems/bootcamp-1-spring/tree/aula8)
+  * **Aula 9**
+      * Adicionando e explicando Swagger da aplicação
+      * Tratando exceções não esperadas com HTTP status 500 no *Exception handler*
+      * Refatorando validações de negócio e *Exception handler* para centralizar as mensagens de erro no arquivo *messages.properties*
+      * Aplicando i18n utilizando o arquivo *messages_en.properties*
+      * Adicionando logs com Logback
+      * Testes unitários com JUnit 5 e Mockito
+      * [Branch - aula 9](https://github.com/materasystems/bootcamp-1-spring/tree/aula9)
