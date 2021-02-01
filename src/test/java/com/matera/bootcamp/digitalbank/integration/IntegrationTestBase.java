@@ -14,14 +14,6 @@ import io.restassured.RestAssured;
 
 public class IntegrationTestBase {
 
-    @LocalServerPort
-    private int port;
-
-    @BeforeEach
-    public void beforeEach() {
-        RestAssured.port = port;
-    }
-
     @Autowired
     protected ClienteRepository clienteRepository;
 
@@ -36,9 +28,15 @@ public class IntegrationTestBase {
 
     @Autowired
     protected TransferenciaRepository transferenciaRepository;
+    
+    @LocalServerPort
+    private int port;
 
     @BeforeEach
     public void limpaBase() {
+    	//Informa ao RestAssured em qual porta (aleatória) o contexto do Spring subiu para o teste de integração
+    	RestAssured.port = port;
+    	
         transferenciaRepository.deleteAll();
         estornoRepository.deleteAll();
         lancamentoRepository.deleteAll();
