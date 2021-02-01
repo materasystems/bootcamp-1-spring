@@ -107,7 +107,12 @@ public class LancamentoService {
 	    Lancamento lancamentoEstorno = buscaLancamentoConta(idConta, idLancamento);
 	    Estorno estorno = estornoRepository.findByLancamentoEstorno_Id(idLancamento)
 	                                       .orElseThrow(() -> new ServiceException("DB-16"));
+	    
 	    Lancamento lancamentoOriginal = estorno.getLancamentoOriginal();
+	    
+	    if (TipoLancamento.TRANSFERENCIA.getCodigo().equals(lancamentoOriginal.getTipoLancamento())) {
+	    	throw new ServiceException("DB-17");
+	    }
 
 	    lancamentoOriginal.getConta().setSaldo(DigitalBankUtils.calculaSaldo(Natureza.buscaPorCodigo(lancamentoOriginal.getNatureza()),
 	                                                                         lancamentoOriginal.getValor(),

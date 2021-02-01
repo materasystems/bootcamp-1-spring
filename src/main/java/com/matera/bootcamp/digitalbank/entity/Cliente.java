@@ -12,12 +12,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(exclude = "conta")
+@SuperBuilder
 @Entity
 @Table(name = "db_cliente")
 public class Cliente extends EntidadeBase {

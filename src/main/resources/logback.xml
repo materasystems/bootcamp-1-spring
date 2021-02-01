@@ -5,14 +5,14 @@
         </encoder>
     </appender>
 
-    <property name="LOG_FOLDER" value="C:\\temp"/>
+    <property name="LOG_FOLDER" value="/home/vagrant/logs"/>
     <property name="LOG_FILE_NAME" value="digitalbank.log" />
     
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_FOLDER}\\${LOG_FILE_NAME}</file>
+        <file>${LOG_FOLDER}/${LOG_FILE_NAME}</file>
         <append>true</append>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FOLDER}\\${LOG_FILE_NAME}.%d{yyyy-MM-dd_HH}hs.zip</fileNamePattern>
+            <fileNamePattern>${LOG_FOLDER}/${LOG_FILE_NAME}.%d{yyyy-MM-dd_HH}hs.zip</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -21,8 +21,8 @@
     </appender>
 
     <!-- Faz o Hibernate exibir os comandos SQL no log da aplicação -->
-    <logger name="org.hibernate.type" level="WARN" /> <!-- Mudar level para ALL -->
-    <logger name="org.hibernate" level="WARN" /> <!-- Mudar level para DEBUG -->
+    <logger name="org.hibernate.type" level="ALL" /> <!-- Mudar level para ALL -->
+    <logger name="org.hibernate" level="DEBUG" /> <!-- Mudar level para DEBUG -->
 
     <!-- Muda o nível de log para DEBUG apenas para as classes da aplicação -->
     <logger name="com.matera.bootcamp.digitalbank" level="DEBUG" />

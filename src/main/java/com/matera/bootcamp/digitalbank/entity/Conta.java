@@ -3,6 +3,7 @@ package com.matera.bootcamp.digitalbank.entity;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,18 +12,18 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Builder
+@SuperBuilder
 @Entity
 @Table(name = "db_conta")
 public class Conta extends EntidadeBase {
@@ -43,7 +44,7 @@ public class Conta extends EntidadeBase {
 	@JoinColumn(name = "id_cliente", nullable = false)
 	private Cliente cliente;
 
-	@OneToMany(mappedBy = "conta")
+	@OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
 	private List<Lancamento> lancamentos;
 
 }

@@ -14,10 +14,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Builder
 @JsonInclude(Include.NON_NULL)
 public class ClienteResponseDTO {
 

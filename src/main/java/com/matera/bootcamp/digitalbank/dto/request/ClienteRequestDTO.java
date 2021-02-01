@@ -20,10 +20,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@Builder
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Builder
 public class ClienteRequestDTO {
 
 	@NotBlank

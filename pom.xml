@@ -52,6 +52,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+		    <groupId>io.rest-assured</groupId>
+		    <artifactId>rest-assured</artifactId>
+		    <scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -68,7 +73,44 @@
 					</excludes>
 				</configuration>
 			</plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*IntegrationTest</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+        <profile>
+            <id>it</id>
+            <build>
+	            <plugins>
+	                <plugin>
+	                    <artifactId>maven-surefire-plugin</artifactId>
+	                    <executions>
+	                        <execution>
+	                            <phase>integration-test</phase>
+	                            <goals>
+	                                <goal>test</goal>
+	                            </goals>
+	                            <configuration>
+	                                <excludes>
+	                                    <exclude>none</exclude>
+	                                </excludes>
+	                                <includes>
+	                                    <include>**/*IntegrationTest</include>
+	                                </includes>
+	                            </configuration>
+	                        </execution>
+	                    </executions>
+	                </plugin>
+	            </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

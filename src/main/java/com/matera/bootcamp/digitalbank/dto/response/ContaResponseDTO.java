@@ -15,10 +15,10 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Builder
 @JsonInclude(Include.NON_NULL)
 @EqualsAndHashCode
 public class ContaResponseDTO {
