@@ -73,3 +73,169 @@
       * Adicionando logs com Logback
       * Testes unitários com JUnit 5 e Mockito
       * [Branch - aula 9](https://github.com/materasystems/bootcamp-1-spring/tree/aula9)
+  * **Aula 10**
+      * Finalizando cenários de testes unitários com JUnit 5 e Mockito
+      * Testes de integração com JUnit 5, Rest Assured e Hamcrest
+      * Criando profile específico no Maven para testes de integração
+      * [Branch - aula 10](https://github.com/materasystems/bootcamp-1-spring/tree/aula10)
+
+* ## Projeto
+  * ### Especificações técnicas
+    * **Linguagem de programação:** Java - JDK 8 ou superior
+    * **Gerenciador de dependências:** Maven 3 ou superior
+    * **Spring Boot:** 2.4.2
+    * **Banco de dados:** H2 database - http://localhost:8080/digitalbank/h2-console
+    * **Testes unitários:** JUnit 5 + Mockito
+    * **Testes de integração:** JUnit 5 + Rest Assured + Hamcrest
+    * **Swagger**: [swagger.yaml](etc/swagger.yaml)
+    * **Postman**: [Digitalbank.postman_collection.json](etc/Digitalbank.postman_collection.json) e [Exemplos-APIs.postman_collection.json](etc/Exemplos-APIs.postman_collection.json)
+
+  * ### Modelagem
+      ![modelagem](etc/digitalbank-der.png)
+
+  * ### Representações
+
+      Os modelos de entrada e saída são representados no formato JSON
+
+      *ClienteRequestDTO*
+      ```json
+      {
+        "nome": "Pedro",
+        "cpf": "74739910004",
+        "telefone": 987665214,
+        "rendaMensal": 10000.0,
+        "logradouro": "Av. São Paulo",
+        "numero": 120,
+        "complemento": "Casa",
+        "bairro": "Centro",
+        "cidade": "Maringá",
+        "estado": "PR",
+        "cep": "85006854"
+      }
+      ```
+
+      *ClienteResponseDTO*
+      ```json
+      {
+         "dados": {
+            "id": 1,
+            "nome": "Pedro",
+            "cpf": "74739910004",
+            "telefone": 987665214,
+            "rendaMensal": 10000.0,
+            "logradouro": "Av. São Paulo",
+            "numero": 120,
+            "complemento": "Casa",
+            "bairro": "Centro",
+            "cidade": "Maringá",
+            "estado": "PR",
+            "cep": "85006854"
+         }
+      }
+      ```
+
+      *ContaResponseDTO*
+      ```json
+      {
+         "dados": {
+           "idCliente": 1,
+           "idConta": 1,
+           "numeroAgencia": 1,
+           "numeroConta": 987665214,
+           "situacao": "A",
+           "saldo": 0
+         }
+      }
+      ```
+      
+      *LancamentoRequestDTO*
+      ```json
+      {
+        "valor": 100.0,
+        "descricao": "Lançamento"
+      }
+      ```
+
+      *TransferenciaRequestDTO*
+      ```json
+      {
+        "numeroAgencia": 1,
+        "numeroConta": 995410233,
+        "valor": 50.0,
+        "descricao": "Transferência"
+      }
+      ```
+
+      *ComprovanteResponseDTO*
+      ```json
+      {
+         "dados": {
+           "idLancamento": 1,
+           "codigoAutenticacao": "e2758c09-3539-4af9-b14b-66f561208b53",
+           "dataHora": "31-12-2020 15:37:28",
+           "valor": 50.0,
+           "natureza": "D",
+           "tipoLancamento": "T",
+           "numeroAgencia": 1,
+           "numeroConta": 995410233,
+           "descricao": "Transferência"
+         }
+      }
+      ```
+
+      *ExtratoResponseDTO*
+      ```json
+      {
+        "dados": {
+          "conta": {
+            "idCliente": 1,
+            "idConta": 1,
+            "numeroAgencia": 1,
+            "numeroConta": 987665214,
+            "situacao": "A",
+            "saldo": 50.0
+          },
+          "lancamentos": [
+            {
+              "idLancamento": 1,
+              "codigoAutenticacao": "e2758c09-3539-4af9-b14b-66f561208b53",
+              "dataHora": "31-12-2020 15:37:28",
+              "valor": 50.0,
+              "natureza": "D",
+              "tipoLancamento": "T",
+              "numeroAgencia": 1,
+              "numeroConta": 995410233,
+              "descricao": "Transferência"
+            }
+          ]
+        }
+      }
+      ```
+
+  * ### Requisições
+
+      * **clientes**
+
+      Método | URL                                                          | Entrada             | Saída
+      ------ | ------------------------------------------------------------ | ------------------- | ------
+      POST   | http://localhost:8080/digitalbank/api/v1/clientes            | *ClienteRequestDTO* | 201 (Created)
+      GET    | http://localhost:8080/digitalbank/api/v1/clientes            |                     | 200 (OK) Lista *ClienteResponseDTO*
+      GET    | http://localhost:8080/digitalbank/api/v1/clientes/{id}       |                     | 200 (OK) *ClienteResponseDTO*
+      PUT    | http://localhost:8080/digitalbank/api/v1/clientes/{id}       | *ClienteRequestDTO* | 204 (No Content)
+      DELETE | http://localhost:8080/digitalbank/api/v1/clientes/{id}/conta | *ContaResponseDTO*  | 200 (Ok)
+
+      * **contas**
+
+      Método | URL                                                                                           | Entrada                   | Saída
+      ------ | --------------------------------------------------------------------------------------------- | ------------------------- | ------
+      GET    | http://localhost:8080/digitalbank/api/v1/contas                                               |                           | 200 (OK) Lista *ContaResponseDTO*
+      POST   | http://localhost:8080/digitalbank/api/v1/contas/{id}/bloquear                                 |                           | 204 (No Content)
+      POST   | http://localhost:8080/digitalbank/api/v1/contas/{id}/desbloquear                              |                           | 204 (No Content)
+      POST   | http://localhost:8080/digitalbank/api/v1/contas/{id}/depositar                                | *LancamentoRequestDTO*    | 200 (Ok) *ComprovanteResponseDTO*
+      POST   | http://localhost:8080/digitalbank/api/v1/contas/{id}/sacar                                    | *LancamentoRequestDTO*    | 200 (Ok) *ComprovanteResponseDTO*
+      POST   | http://localhost:8080/digitalbank/api/v1/contas/{id}/pagar                                    | *LancamentoRequestDTO*    | 200 (Ok) *ComprovanteResponseDTO*
+      POST   | http://localhost:8080/digitalbank/api/v1/contas/{id}/transferir                               | *TransferenciaRequestDTO* | 200 (Ok) *ComprovanteResponseDTO*
+      GET    | http://localhost:8080/digitalbank/api/v1/contas/{idConta}/lancamentos                         |                           | 200 (Ok) Lista *ComprovanteResponseDTO*
+      GET    | http://localhost:8080/digitalbank/api/v1/contas/{idConta}/lancamentos/{idLancamento}          |                           | 200 (Ok) *ComprovanteResponseDTO*
+      DELETE | http://localhost:8080/digitalbank/api/v1/contas/{idConta}/lancamentos/{idLancamento}          |                           | 204 (No Content)
+      POST   | http://localhost:8080/digitalbank/api/v1/contas/{idConta}/lancamentos/{idLancamento}/estornar |                           | 200 (Ok) *ComprovanteResponseDTO*
