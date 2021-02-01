@@ -5,7 +5,7 @@
         </encoder>
     </appender>
 
-    <property name="LOG_FOLDER" value="/home/vagrant/logs"/>
+    <property name="LOG_FOLDER" value="./logs"/>
     <property name="LOG_FILE_NAME" value="digitalbank.log" />
     
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
